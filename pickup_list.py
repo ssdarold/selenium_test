@@ -1,0 +1,1 @@
+pickup_list = ["Roma, Рим, Италия", "Portofino, Генуя, Италия", "Würzburg, Германия", "Essen, Германия", "Erfurt, Германия", "Regensburg, Германия", "Toulouse, Франция", "Tour Eiffel, Проспект Анатоль Франция, Париж, Франция"]
