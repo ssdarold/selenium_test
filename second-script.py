@@ -18,7 +18,7 @@ url = 'https://dli.3wp.ru/'
 
 options = Options()
 options.headless = True
-driver = webdriver.Chrome(options=options, executable_path=r'C:\\Users\\1395266\\Documents\\ChromeDriver\\chromedriver.exe')
+driver = webdriver.Chrome(executable_path=r'C:\\Users\\1395266\\Documents\\ChromeDriver\\chromedriver.exe')
 
 
 
@@ -143,9 +143,10 @@ if response.text != itogPriceSLong:
     with open('errorLog.txt', 'a', encoding='utf-8') as err:
         err.write(f'Цены для Sprinter Long не совпадают. Цена на сайте: {itogPriceSLong}, правильная цена: {response.text}. Дата: {inputDate}, дистанция: {distance}. Тип трансфера - One Way')
 
-
+# Выбираем рандомно машину
 random_index_class = random.randrange(len(class_list))
-step3Button = driver.find_element_by_id(f'{class_list[random_index_class]}-button')
+choosenClass = class_list[random_index_class]
+step3Button = driver.find_element_by_id(f'{choosenClass}-button')
 driver.execute_script("arguments[0].click();", step3Button)
 
 # Запрашиваем данные сделки, созданной на основе лида
@@ -164,35 +165,23 @@ if text['car_type'] != full_class_name_list[random_index_class]:
 
 
 # payments
-time.sleep(6)
-# Переключаемся на iframe
-driver.switch_to.frame(driver.find_element_by_tag_name("iframe"))
-
-# Заполняем данные
-driver.find_element_by_id('Field-numberInput').send_keys("4242424242424242")
-driver.find_element_by_id('Field-expiryInput').send_keys("01/33")
-driver.find_element_by_id('Field-cvcInput').send_keys("123")
-
-# Переключаемся обратно на основной контент
-driver.switch_to.default_content()
-
-
-payButton = driver.find_element_by_xpath('/html/body/div[3]/main/div/div/div[3]/div[2]/form/button')
-driver.execute_script("arguments[0].click();", payButton)
-
 time.sleep(3)
 
-# Проверяем, пришел ли Payment code в сделку
-hookData = requests.get('https://dli.3wp.ru/wp-content/plugins/step-form-backend/core/checkZoho.php')
-text = json.loads(hookData.text)
+driver.back()
 
-if text['payment_code'] == "0":
-    with open('errorLog.txt', 'a', encoding='utf-8') as err:
-        err.write('На вебхук не пришел Payment code. Success. Тип трансфера - One Way')
+# Получение случайного индекса, отличного от предыдущего
+while True:
+    second_index = random.randrange(len(class_list))
+    if second_index != random_index_class:
+        break
 
-
+secondChoosenClass = class_list[second_index]
+secondStep3Button = driver.find_element_by_id(f'{secondChoosenClass}-button')
+driver.execute_script("arguments[0].click();", secondStep3Button)
 
 # =========================  Hourly ========================= 
+
+driver.get(url)
 
 driver.find_element_by_class_name('active-hourly').click()
 
@@ -292,8 +281,10 @@ if response.text != itogPriceSLong:
         err.write(f'Цены для Sprinter Long не совпадают. Цена на сайте: {itogPriceSLong}, правильная цена: {response.text}. Дата: {inputDate}, продолжительность: {duration}. Тип трансфера - Hourly')
 
 
+# Выбираем рандомно машину
 random_index_class = random.randrange(len(class_list))
-step3Button = driver.find_element_by_id(f'{class_list[random_index_class]}-button')
+choosenClass = class_list[random_index_class]
+step3Button = driver.find_element_by_id(f'{choosenClass}-button')
 driver.execute_script("arguments[0].click();", step3Button)
 
 # Запрашиваем данные сделки, созданной на основе лида
@@ -313,34 +304,24 @@ if text['car_type'] != full_class_name_list[random_index_class]:
 
 # payments
 time.sleep(6)
-# Переключаемся на iframe
-driver.switch_to.frame(driver.find_element_by_tag_name("iframe"))
 
-# Заполняем данные
-driver.find_element_by_id('Field-numberInput').send_keys("4242424242424242")
-driver.find_element_by_id('Field-expiryInput').send_keys("01/33")
-driver.find_element_by_id('Field-cvcInput').send_keys("123")
+driver.back()
 
-# Переключаемся обратно на основной контент
-driver.switch_to.default_content()
+# Получение случайного индекса, отличного от предыдущего
+while True:
+    second_index = random.randrange(len(class_list))
+    if second_index != random_index_class:
+        break
 
-
-payButton = driver.find_element_by_xpath('/html/body/div[3]/main/div/div/div[3]/div[2]/form/button')
-driver.execute_script("arguments[0].click();", payButton)
-
-time.sleep(3)
-
-# Проверяем, пришел ли Payment code в сделку
-hookData = requests.get('https://dli.3wp.ru/wp-content/plugins/step-form-backend/core/checkZoho.php')
-text = json.loads(hookData.text)
-
-if text['payment_code'] == "0":
-    with open('errorLog.txt', 'a', encoding='utf-8') as err:
-        err.write('На вебхук не пришел Payment code. Success. Тип трансфера - Hourly')
+secondChoosenClass = class_list[second_index]
+secondStep3Button = driver.find_element_by_id(f'{secondChoosenClass}-button')
+driver.execute_script("arguments[0].click();", secondStep3Button)
 
 
 # =========================  Tours  ========================= 
 
+
+driver.get(url)
 
 driver.find_element_by_class_name('active-tours').click()
 
@@ -355,8 +336,10 @@ driver.find_element_by_name('submit_3').click()
 # step-2
 
 
+# Выбираем рандомно машину
 random_index_class = random.randrange(len(class_list))
-step3Button = driver.find_element_by_id(f'{class_list[random_index_class]}-button')
+choosenClass = class_list[random_index_class]
+step3Button = driver.find_element_by_id(f'{choosenClass}-button')
 driver.execute_script("arguments[0].click();", step3Button)
 
 # Запрашиваем данные сделки, созданной на основе лида
@@ -380,6 +363,19 @@ text = json.loads(hookData.text)
 if text['entity_status'] != "lead" or text['first_name'] != firstName or text['last_name'] != lastName or text['umail'] != umail or text['tel'] != tel or text['pickup'] != pickup_list.pickup_list[random_index_pickup] or text['ride_date'] != finDate:
     with open('errorLog.txt', 'a', encoding='utf-8') as err:
         err.write('Неверные данные пришли на вебхук при создании лида. Step-2. Тип трансфера - Tours')
+
+
+driver.back()
+
+# Получение случайного индекса, отличного от предыдущего
+while True:
+    second_index = random.randrange(len(class_list))
+    if second_index != random_index_class:
+        break
+
+secondChoosenClass = class_list[second_index]
+secondStep3Button = driver.find_element_by_id(f'{secondChoosenClass}-button')
+driver.execute_script("arguments[0].click();", secondStep3Button)
 
 # step-3
 

@@ -1,1 +1,2 @@
 class_list = ["eclass", "vclass", "sclass", "sprinter", "glsclass", "slong"]
+full_class_name_list = ["Executive Sedan: Mercedes “E Class”", "Executive Minivan: Mercedes “V Class”", "Luxury Sedan: Mercedes “S Class”", "Executive Van: Mercedes “Sprinter” Classic", "Luxury SUV Mercedes “GLS Class”", "Luxury Van: Mercedes “Sprinter” Long"]
